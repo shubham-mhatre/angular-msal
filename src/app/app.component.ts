@@ -20,6 +20,11 @@ export class AppComponent implements OnInit{
         if(res!=null && res.account!=null){
           console.log(res);
           this.msalService.instance.setActiveAccount(res.account);
+          const idToken=res.idToken;
+          if(idToken){
+            localStorage.setItem('id_token',idToken);
+            localStorage.setItem('access_token',res.accessToken);
+          }
         }
       }
     )
@@ -31,7 +36,6 @@ export class AppComponent implements OnInit{
 
   loginPopUp(){
     this.msalService.loginPopup().subscribe((response:AuthenticationResult)=>{
-      debugger;
       console.log(response);
       this.msalService.instance.setActiveAccount(response.account);
     });
@@ -43,5 +47,6 @@ export class AppComponent implements OnInit{
 
   logout(){
     this.msalService.logout();
+    localStorage.clear();
   }
 }

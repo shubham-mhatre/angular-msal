@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { MSAL_INSTANCE, MsalModule, MsalService } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 export function MSALInstanceFactory():IPublicClientApplication{
   return new PublicClientApplication({
@@ -19,19 +22,26 @@ export function MSALInstanceFactory():IPublicClientApplication{
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MsalModule
+    MsalModule,
+    HttpClientModule
   ],
   providers: [
     {
       provide:MSAL_INSTANCE,
       useFactory:MSALInstanceFactory
+    },
+    {
+      provide :HTTP_INTERCEPTORS,
+      useClass : AuthInterceptor,
+      multi:true
     },
     MsalService
   ],

@@ -1,18 +1,33 @@
-<mat-toolbar class="navbar navbar-dark">
+<mat-toolbar class="navbar navbar-dark" color="primary">
     <span>MSAL DEMO</span>
-    <div>
-        <button *ngIf="!isLoggedIn()" mat-raised-button (click)="loginPopUp()">SIGN IN as POPUP</button>
-        <button *ngIf="!isLoggedIn()" class="navbtn" mat-raised-button (click)="login()">SIGN IN</button>
-        <button *ngIf="isLoggedIn()"  mat-raised-button (click)="logout()">SIGN OUT</button>
+    <span class="spacer"></span>
+
+    <div *ngIf="isLoggedIn()">
+        <mat-list class="navbar-list">
+          <mat-list-item class="white-text" routerLink="/employee">Employee</mat-list-item>
+        </mat-list>
     </div>
-</mat-toolbar>
 
-<div *ngIf="!isLoggedIn()" class="highlightmsgerror">
+    <div class="auth-buttons">
+      <button *ngIf="!isLoggedIn()" mat-raised-button (click)="loginPopUp()">SIGN IN as POPUP</button>
+      <button *ngIf="!isLoggedIn()" class="navbtn" mat-raised-button (click)="login()">SIGN IN</button>
+      <button *ngIf="isLoggedIn()" mat-raised-button (click)="logout()">SIGN OUT</button>
+    </div>
+  </mat-toolbar>
+  
+  <div *ngIf="!isLoggedIn()" class="highlightmsgerror">
     <h3>You are not logged In. Please Sign In</h3>
-</div>
-
-<div *ngIf="isLoggedIn()" class="highlightmsgsuccess">
+  </div>
+  
+  <div *ngIf="isLoggedIn()" class="highlightmsgsuccess">
     <h3>Welcome! You are now logged In . . .</h3>
-</div>
+  </div>
+  
 
-<router-outlet></router-outlet>
+
+  <router-outlet></router-outlet>
+  
+  
+  
+
+  
